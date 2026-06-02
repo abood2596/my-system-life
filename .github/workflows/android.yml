@@ -5,6 +5,9 @@ on:
     branches: ["**"]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,9 +28,25 @@ jobs:
       - name: Build debug APK
         run: gradle assembleDebug --stacktrace
 
-      - name: Upload APK
+      - name: Rename APK
+        run: |
+          mkdir -p dist
+          cp app/build/outputs/apk/debug/*.apk dist/MySystemLife.apk
+
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: my-system-life-debug-apk
-          path: app/build/outputs/apk/debug/*.apk
+          name: MySystemLife-apk
+          path: dist/MySystemLife.apk
           if-no-files-found: error
+
+      - name: Publish to Release (direct download link)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: نظام حياتي — أحدث نسخة
+          body: |
+            ملف التثبيت المباشر لتطبيق "نظام حياتي".
+            حمّل MySystemLife.apk وثبّته على هاتفك (فعّل "تثبيت من مصادر غير معروفة").
+          files: dist/MySystemLife.apk
+          make_latest: "true"
