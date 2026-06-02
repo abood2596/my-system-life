@@ -1,10 +1,10 @@
-/* تَسَابِيح ∞ v21 — Service Worker
+/* إشراق — Service Worker
    الاستراتيجية: Network-First للـ HTML، Cache-First للباقي
    لا skipWaiting() — بدلاً منه: إشعار المستخدم بالتحديث
    ────────────────────────────────────────────────── */
 
-const CACHE_V    = 'tasabeeh-v21-r2';
-const FONT_CACHE = 'tasabeeh-fonts-v1';
+const CACHE_V    = 'ishraq-v2-r1';
+const FONT_CACHE = 'ishraq-fonts-v1';
 
 const CORE_ASSETS = [
   './',
@@ -14,6 +14,10 @@ const CORE_ASSETS = [
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/icon.svg',
+  './fonts/cairo-arabic.woff2',
+  './fonts/cairo-latin.woff2',
+  './fonts/amiri-regular.woff2',
+  './fonts/amiri-bold.woff2',
   './js/app.js',
   './js/core/constants.js',
   './js/core/utils.js',

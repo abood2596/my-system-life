@@ -1,70 +1,54 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
   <defs>
-    <radialGradient id="bg" cx="50%" cy="35%" r="70%">
-      <stop offset="0%" stop-color="#1A1200"/>
-      <stop offset="100%" stop-color="#000000"/>
+    <linearGradient id="bg" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#080B18"/>
+      <stop offset="0.45" stop-color="#15182E"/>
+      <stop offset="0.78" stop-color="#3A2A4D"/>
+      <stop offset="1" stop-color="#6B3E5A"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFF1C9"/>
+      <stop offset="0.45" stop-color="#FFC56F"/>
+      <stop offset="0.8" stop-color="#FF8A5B"/>
+      <stop offset="1" stop-color="#FF7E5F"/>
     </radialGradient>
-    <radialGradient id="bg2" cx="50%" cy="20%" r="50%">
-      <stop offset="0%" stop-color="#2A1E00" stop-opacity="0.8"/>
-      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFC56F" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#FFC56F" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="beadGold" cx="32%" cy="28%" r="68%">
-      <stop offset="0%" stop-color="#FFFACD"/>
-      <stop offset="40%" stop-color="#D4AF37"/>
-      <stop offset="100%" stop-color="#6B4C00"/>
-    </radialGradient>
-    <radialGradient id="beadCyan" cx="32%" cy="28%" r="68%">
-      <stop offset="0%" stop-color="#E0FEFF"/>
-      <stop offset="40%" stop-color="#00E5FF"/>
-      <stop offset="100%" stop-color="#005A80"/>
-    </radialGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="6" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="sg">
-      <feGaussianBlur stdDeviation="3" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
+    <linearGradient id="horizon" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FFB454" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#FFC56F" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#FFB454" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="aboveHorizon"><rect x="0" y="0" width="512" height="318"/></clipPath>
   </defs>
-  <!-- BG -->
+
   <rect width="512" height="512" rx="112" fill="url(#bg)"/>
-  <rect width="512" height="512" rx="112" fill="url(#bg2)"/>
-  <!-- Stars -->
-  <g fill="#D4AF37" opacity="0.2">
-    <circle cx="75" cy="85" r="2"/><circle cx="435" cy="115" r="1.5"/>
-    <circle cx="65" cy="405" r="1.5"/><circle cx="455" cy="375" r="2"/>
-    <circle cx="200" cy="28" r="1"/><circle cx="370" cy="48" r="1.5"/>
+
+  <!-- ambient dawn glow -->
+  <circle cx="256" cy="318" r="230" fill="url(#glow)"/>
+
+  <!-- faint 8-point Islamic star (Rub el Hizb) framing the dawn -->
+  <g stroke="#FFD9A0" stroke-width="3" fill="none" opacity="0.22">
+    <rect x="146" y="146" width="220" height="220"/>
+    <rect x="146" y="146" width="220" height="220" transform="rotate(45 256 256)"/>
   </g>
-  <!-- String circle -->
-  <circle cx="256" cy="272" r="142" fill="none" stroke="#D4AF37" stroke-width="2" opacity="0.18" stroke-dasharray="7,5"/>
-  <!-- Beads: 12 on circle r=142, cx=256, cy=272 -->
-  <g filter="url(#sg)">
-    <!-- top special cyan bead -->
-    <circle cx="256" cy="130" r="21" fill="url(#beadCyan)"/>
-    <circle cx="249" cy="123" r="6" fill="rgba(255,255,255,0.4)"/>
-    <!-- 11 gold beads -->
-    <circle cx="326" cy="147" r="15" fill="url(#beadGold)"/><circle cx="321" cy="142" r="4.5" fill="rgba(255,255,255,0.35)"/>
-    <circle cx="378" cy="200" r="15" fill="url(#beadGold)"/><circle cx="373" cy="195" r="4.5" fill="rgba(255,255,255,0.35)"/>
-    <circle cx="398" cy="272" r="15" fill="url(#beadGold)"/><circle cx="393" cy="267" r="4.5" fill="rgba(255,255,255,0.35)"/>
-    <circle cx="378" cy="344" r="15" fill="url(#beadGold)"/><circle cx="373" cy="339" r="4.5" fill="rgba(255,255,255,0.35)"/>
-    <circle cx="326" cy="397" r="15" fill="url(#beadGold)"/><circle cx="321" cy="392" r="4.5" fill="rgba(255,255,255,0.35)"/>
-    <circle cx="256" cy="414" r="15" fill="url(#beadGold)"/><circle cx="251" cy="409" r="4.5" fill="rgba(255,255,255,0.35)"/>
-    <circle cx="186" cy="397" r="15" fill="url(#beadGold)"/><circle cx="181" cy="392" r="4.5" fill="rgba(255,255,255,0.35)"/>
-    <circle cx="134" cy="344" r="15" fill="url(#beadGold)"/><circle cx="129" cy="339" r="4.5" fill="rgba(255,255,255,0.35)"/>
-    <circle cx="114" cy="272" r="15" fill="url(#beadGold)"/><circle cx="109" cy="267" r="4.5" fill="rgba(255,255,255,0.35)"/>
-    <circle cx="134" cy="200" r="15" fill="url(#beadGold)"/><circle cx="129" cy="195" r="4.5" fill="rgba(255,255,255,0.35)"/>
-    <circle cx="186" cy="147" r="15" fill="url(#beadGold)"/><circle cx="181" cy="142" r="4.5" fill="rgba(255,255,255,0.35)"/>
+
+  <!-- rising sun rays -->
+  <g stroke="url(#horizon)" stroke-width="7" stroke-linecap="round" opacity="0.9">
+    <line x1="256" y1="120" x2="256" y2="170"/>
+    <line x1="160" y1="150" x2="186" y2="192"/>
+    <line x1="352" y1="150" x2="326" y2="192"/>
+    <line x1="96"  y1="232" x2="146" y2="252"/>
+    <line x1="416" y1="232" x2="366" y2="252"/>
   </g>
-  <!-- Tassel -->
-  <line x1="256" y1="151" x2="256" y2="178" stroke="#D4AF37" stroke-width="2.5" opacity="0.7"/>
-  <circle cx="256" cy="183" r="5" fill="#D4AF37" opacity="0.75"/>
-  <!-- Arabic Title -->
-  <text x="256" y="248" font-family="Georgia,serif" font-size="54" font-weight="900" text-anchor="middle" fill="#D4AF37" filter="url(#glow)" letter-spacing="1">تَسَابِيح</text>
-  <!-- Sub -->
-  <text x="256" y="292" font-family="system-ui,sans-serif" font-size="20" text-anchor="middle" fill="rgba(212,175,55,0.5)" letter-spacing="4">ذِكْرُ اللَّهِ</text>
-  <!-- Divider -->
-  <line x1="200" y1="306" x2="312" y2="306" stroke="#D4AF37" stroke-width="1" opacity="0.25"/>
-  <!-- Palestine emoji area - small heart -->
-  <text x="256" y="332" font-size="16" text-anchor="middle" opacity="0.65">🍉</text>
+
+  <!-- the rising sun (clipped to a half-disc above the horizon) -->
+  <g clip-path="url(#aboveHorizon)">
+    <circle cx="256" cy="318" r="96" fill="url(#sun)"/>
+  </g>
+
+  <!-- horizon line -->
+  <rect x="64" y="315" width="384" height="6" rx="3" fill="url(#horizon)"/>
 </svg>

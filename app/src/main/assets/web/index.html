@@ -3,41 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-<meta name="theme-color" content="#060410">
+<meta name="theme-color" content="#0A0E1F">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="تسابيح">
-<meta name="description" content="مرصد روحي شامل — تسبيح، صلاة، تعافٍ، تمرين">
-<title>تَسَابِيح ∞ v21</title>
+<meta name="apple-mobile-web-app-title" content="إشراق">
+<meta name="description" content="إشراق — وردك وصلاتك وتعافيك في نورٍ واحد">
+<title>إشراق</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
 /* ══════════════════════════════════════════════════════
-   DESIGN TOKENS — AMOLED Black + Gold
+   إشراق — Local fonts (offline, no CDN)
+══════════════════════════════════════════════════════ */
+@font-face{font-family:'Cairo';src:url('./fonts/cairo-arabic.woff2') format('woff2');
+  unicode-range:U+0600-06FF,U+0750-077F,U+08A0-08FF,U+FB50-FDFF,U+FE70-FEFF,U+200C-200E,U+2010-2011;
+  font-weight:400 800;font-display:swap;}
+@font-face{font-family:'Cairo';src:url('./fonts/cairo-latin.woff2') format('woff2');
+  font-weight:400 800;font-display:swap;}
+@font-face{font-family:'Amiri';src:url('./fonts/amiri-regular.woff2') format('woff2');font-weight:400;font-display:swap;}
+@font-face{font-family:'Amiri';src:url('./fonts/amiri-bold.woff2') format('woff2');font-weight:700;font-display:swap;}
+
+/* ══════════════════════════════════════════════════════
+   DESIGN TOKENS — إشراق (Dawn): deep night + sunrise glow
 ══════════════════════════════════════════════════════ */
 :root{
-  --bg:#060410;--bg2:#0C0820;--bg3:#110D28;
-  --bg-card:rgba(255,255,255,.04);--bg-card2:rgba(255,255,255,.07);
-  --border:rgba(255,255,255,.08);--border-gold:rgba(212,160,23,.25);
-  --gold:#D4A017;--gold-m:#E8B830;--gold-l:#F5D060;--gold-ll:#FFF0B0;
-  --gold-dim:rgba(212,160,23,.12);--gold-dim2:rgba(212,160,23,.06);
-  --gold-glow:rgba(212,160,23,.45);
-  --green:#10B981;--green-d:rgba(16,185,129,.12);
-  --blue:#3B82F6;--blue-d:rgba(59,130,246,.12);
-  --red:#EF4444;--red-d:rgba(239,68,68,.12);
-  --purple:#8B5CF6;--purple-d:rgba(139,92,246,.12);
-  --t90:rgba(255,255,255,.90);--t70:rgba(255,255,255,.70);
-  --t50:rgba(255,255,255,.50);--t30:rgba(255,255,255,.30);
+  --bg:#0A0E1F;--bg2:#121829;--bg3:#1A2236;
+  --bg-card:rgba(255,255,255,.05);--bg-card2:rgba(255,255,255,.08);
+  --border:rgba(255,255,255,.09);--border-gold:rgba(255,180,84,.28);
+  --gold:#FFB454;--gold-m:#FF9A5B;--gold-l:#FFC56F;--gold-ll:#FFE7BE;
+  --gold-dim:rgba(255,180,84,.14);--gold-dim2:rgba(255,180,84,.07);
+  --gold-glow:rgba(255,160,90,.45);
+  --green:#34D399;--green-d:rgba(52,211,153,.13);
+  --blue:#5B8DEF;--blue-d:rgba(91,141,239,.13);
+  --red:#FF6B6B;--red-d:rgba(255,107,107,.13);
+  --purple:#7C6BFF;--purple-d:rgba(124,107,255,.14);
+  --t90:rgba(255,255,255,.92);--t70:rgba(255,255,255,.72);
+  --t50:rgba(255,255,255,.52);--t30:rgba(255,255,255,.32);
   --t12:rgba(255,255,255,.12);--t06:rgba(255,255,255,.06);
-  --nav-h:62px;--hdr-h:52px;
-  --r-sm:10px;--r-md:14px;--r-lg:20px;--r-pill:100px;
-  --f-ui:'IBM Plex Sans Arabic','Segoe UI',system-ui,sans-serif;
+  --nav-h:64px;--hdr-h:54px;
+  --r-sm:12px;--r-md:16px;--r-lg:22px;--r-pill:100px;
+  --f-ui:'Cairo','Segoe UI',system-ui,sans-serif;
   --f-quran:'Amiri','Traditional Arabic',serif;
-  --shadow:0 4px 24px rgba(0,0,0,.5);
+  --shadow:0 8px 32px rgba(0,0,0,.45);
 }
 [data-theme=sapphire]{--gold:#4A9EFF;--gold-m:#6AB8FF;--gold-l:#92D0FF;--gold-ll:#C8EAFF;--gold-dim:rgba(74,158,255,.12);--gold-dim2:rgba(74,158,255,.06);--gold-glow:rgba(74,158,255,.45);--border-gold:rgba(74,158,255,.25);}
 [data-theme=emerald]{--gold:#10B981;--gold-m:#00D48A;--gold-l:#40F0A8;--gold-ll:#B0FFE0;--gold-dim:rgba(16,185,129,.12);--gold-dim2:rgba(16,185,129,.06);--gold-glow:rgba(16,185,129,.45);--border-gold:rgba(16,185,129,.25);}
@@ -442,6 +450,40 @@ canvas#pcv{position:fixed;inset:0;pointer-events:none;z-index:0;}
 .btn-install-now{background:var(--gold);color:var(--bg);border-radius:var(--r-pill);padding:7px 16px;font-size:.82rem;font-weight:700;}
 .btn-install-dismiss,.btn-reload{background:var(--bg-card);border:1px solid var(--border);
   border-radius:var(--r-pill);padding:7px 14px;font-size:.8rem;color:var(--t70);}
+
+/* ══════════════════════════════════════════════════════
+   إشراق — Dawn backdrop + Glassmorphism overlay
+══════════════════════════════════════════════════════ */
+body{
+  background:
+    radial-gradient(125% 75% at 50% -12%, rgba(124,107,255,.20), transparent 58%),
+    radial-gradient(95% 55% at 50% 2%, rgba(255,138,91,.18), transparent 52%),
+    linear-gradient(180deg,#0A0E1F 0%,#080B18 100%);
+  background-attachment:fixed;
+}
+#hdr{
+  background:rgba(10,14,31,.66);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+  border-bottom:1px solid var(--border);
+}
+#nav{
+  background:rgba(10,14,31,.74);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+  border-top:1px solid var(--border);
+}
+#hdr-logo{font-family:var(--f-ui);font-weight:800;letter-spacing:.4px;}
+.card,.hero-card,.verse-card,.pray-hero,.bq-hero,.rec-hero,.brain-section,
+.fit-section,.rec-timeline,.more-section,.stats-heatmap-section,
+.stats-chart-section,.stats-achievements,.gold-card{
+  backdrop-filter:blur(14px) saturate(130%);-webkit-backdrop-filter:blur(14px) saturate(130%);
+  box-shadow:var(--shadow);
+}
+.tab.active .t-ico{filter:drop-shadow(0 0 8px var(--gold-glow));transform:translateY(-1px);transition:transform .2s;}
+/* gentle sunrise breathing on the active tab + glow accents */
+@keyframes dawnGlow{0%,100%{opacity:.85}50%{opacity:1}}
+.hero-card,.pray-hero,.bq-hero{animation:dawnGlow 7s ease-in-out infinite;}
+button{transition:transform .12s ease,opacity .2s ease;}
+button:active{transform:scale(.97);}
 </style>
 </head>
 <body>
@@ -450,7 +492,7 @@ canvas#pcv{position:fixed;inset:0;pointer-events:none;z-index:0;}
 <div id="app">
   <!-- HEADER -->
   <header id="hdr">
-    <div id="hdr-logo">تَسَابِيح ∞</div>
+    <div id="hdr-logo">إشراق ☀</div>
     <div id="hdr-info">
       <div id="hdr-clock">12:00 PM</div>
       <div id="hdr-hijri"></div>
@@ -487,7 +529,7 @@ canvas#pcv{position:fixed;inset:0;pointer-events:none;z-index:0;}
       <button class="btn-more-action" id="btn-restore">📥 استعادة</button>
     </div>
     <div class="more-section" style="text-align:center;color:var(--t30,var(--t50));font-size:.75rem;">
-      <p>تَسَابِيح ∞ — النسخة الملكية</p>
+      <p>إشراق ☀ — نورُ يومِك</p>
       <p style="margin-top:8px;color:var(--gold-l);font-weight:600;">تطوير: عبدالحميد الفرا</p>
       <p style="margin-top:8px;color:var(--t70);">صدقة جارية عن روح الشهيد البطل<br><strong style="color:var(--gold-l);">زهير الفرا</strong><br>بطل الدفاع المدني — استشهد في مجزرة المسعفين<br>٢٣ مارس ٢٠٢٥</p>
       <p style="margin-top:8px;color:var(--gold);">اللهم تقبّله في الشهداء وارحمه رحمة واسعة</p>

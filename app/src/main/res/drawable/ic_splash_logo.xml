@@ -1,20 +1,38 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="120dp"
-    android:height="120dp"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="160dp"
+    android:height="160dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- Rub el Hizb: two overlapping squares (Islamic 8-point star) -->
+
+    <!-- faint 8-point Islamic star -->
     <path
         android:pathData="M30,30 H78 V78 H30 Z"
-        android:strokeColor="#C9A24B"
-        android:strokeWidth="3"
-        android:fillColor="#00000000" />
-    <path
-        android:pathData="M54,21 L87,54 L54,87 L21,54 Z"
-        android:strokeColor="#C9A24B"
-        android:strokeWidth="3"
-        android:fillColor="#00000000" />
-    <path
-        android:pathData="M54,42 a12,12 0 1,0 0.1,0 Z"
-        android:fillColor="#C9A24B" />
+        android:strokeColor="#FFD9A0" android:strokeWidth="1.6" android:strokeAlpha="0.25" android:fillColor="#00000000" />
+    <group android:rotation="45" android:pivotX="54" android:pivotY="54">
+        <path
+            android:pathData="M30,30 H78 V78 H30 Z"
+            android:strokeColor="#FFD9A0" android:strokeWidth="1.6" android:strokeAlpha="0.25" android:fillColor="#00000000" />
+    </group>
+
+    <!-- rays -->
+    <path android:pathData="M54,12 V24" android:strokeColor="#FFD9A0" android:strokeWidth="2.4" android:strokeLineCap="round" android:strokeAlpha="0.9" />
+    <path android:pathData="M28,22 L36,33" android:strokeColor="#FFD9A0" android:strokeWidth="2.4" android:strokeLineCap="round" android:strokeAlpha="0.9" />
+    <path android:pathData="M80,22 L72,33" android:strokeColor="#FFD9A0" android:strokeWidth="2.4" android:strokeLineCap="round" android:strokeAlpha="0.9" />
+    <path android:pathData="M14,46 L25,52" android:strokeColor="#FFD9A0" android:strokeWidth="2.4" android:strokeLineCap="round" android:strokeAlpha="0.9" />
+    <path android:pathData="M94,46 L83,52" android:strokeColor="#FFD9A0" android:strokeWidth="2.4" android:strokeLineCap="round" android:strokeAlpha="0.9" />
+
+    <!-- rising sun -->
+    <path android:pathData="M28,68 A26,26 0 0 1 80,68 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:type="radial" android:centerX="54" android:centerY="68" android:gradientRadius="30">
+                <item android:offset="0" android:color="#FFF1C9" />
+                <item android:offset="0.55" android:color="#FFC56F" />
+                <item android:offset="1" android:color="#FF8A5B" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- horizon -->
+    <path android:pathData="M22,68 H86" android:strokeColor="#FFD9A0" android:strokeWidth="3" android:strokeLineCap="round" />
 </vector>

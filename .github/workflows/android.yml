@@ -31,22 +31,22 @@ jobs:
       - name: Rename APK
         run: |
           mkdir -p dist
-          cp app/build/outputs/apk/debug/*.apk dist/MySystemLife.apk
+          cp app/build/outputs/apk/debug/*.apk dist/Ishraq.apk
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: MySystemLife-apk
-          path: dist/MySystemLife.apk
+          name: Ishraq-apk
+          path: dist/Ishraq.apk
           if-no-files-found: error
 
       - name: Publish to Release (direct download link)
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
-          name: نظام حياتي — أحدث نسخة
+          name: إشراق — أحدث نسخة
           body: |
-            ملف التثبيت المباشر لتطبيق "نظام حياتي".
-            حمّل MySystemLife.apk وثبّته على هاتفك (فعّل "تثبيت من مصادر غير معروفة").
-          files: dist/MySystemLife.apk
+            ملف التثبيت المباشر لتطبيق "إشراق" ☀.
+            حمّل Ishraq.apk وثبّته على هاتفك (فعّل "تثبيت من مصادر غير معروفة").
+          files: dist/Ishraq.apk
           make_latest: "true"
