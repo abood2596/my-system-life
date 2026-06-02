@@ -1,8 +1,8 @@
-/* تَسَابِيح ∞ v21 — Home View */
+/* إشراق — Home View (اليوم) — بطل السلسلة + ملخّص اليوم (بلا XP) */
 import { getState, subscribe } from '../../core/store.js';
-import { $, aN, isFridayToday, vib } from '../../core/utils.js';
+import { $, aN, isFridayToday, vib, dStr } from '../../core/utils.js';
 import { DHIKR, VERSES } from '../../core/constants.js';
-import { calcLevel, calcLevelProgress, xpToNextLevel, LEVELS } from '../../data/science.js';
+import { LS } from '../../core/storage.js';
 import { openCounter } from '../overlays/counter.js';
 import { openBulkAdd } from '../overlays/bulk-add.js';
 import { openMisbaha } from '../overlays/misbaha.js';
@@ -12,12 +12,24 @@ import { playTap } from '../components/sound.js';
 
 let _verseIdx = 0;
 
+function _greeting() {
+  const h = new Date().getHours();
+  if (h < 5)  return 'سَكينةُ الليل 🌙';
+  if (h < 12) return 'أشرقَ صباحُك ☀️';
+  if (h < 17) return 'نهارٌ مبارك 🌤️';
+  if (h < 20) return 'مساءُ الخير 🌆';
+  return 'مساءٌ مبارك 🌙';
+}
+
+function _todayTotal(st)  { return (st.counts || []).reduce((a, b) => a + (b || 0), 0); }
+function _prayDone()      { return (LS.get('wirdi_pray_' + dStr(), []) || []).filter(Boolean).length; }
+
 export function initHome() {
   renderHome();
-  subscribe('counts', () => _refreshCounts());
-  subscribe('xp',     () => _refreshHero());
+  subscribe('counts',        () => _refreshCounts());
+  subscribe('recovery',      () => _refreshHero());
   subscribe('tasbeehStreak', () => _refreshHero());
-  subscribe('isFriday', () => renderHome());
+  subscribe('isFriday',      () => renderHome());
 
   // دوران الآيات كل 12 ثانية
   setInterval(() => {
@@ -36,26 +48,25 @@ export function initHome() {
 }
 
 export function renderHome() {
-  const st     = getState();
-  const isFri  = isFridayToday();
-  const lv     = LEVELS[calcLevel(st.xp) - 1] || LEVELS[0];
-  const pct    = calcLevelProgress(st.xp);
-  const toNext = xpToNextLevel(st.xp);
+  const st    = getState();
+  const isFri = isFridayToday();
+  const streak  = st.tasbeehStreak || 0;
+  const recStrk = st.recovery?.streak || 0;
 
   const homeEl = $('v-home');
   if (!homeEl) return;
 
   homeEl.innerHTML = `
-    ${isFri ? `<div class="friday-banner">🌟 يوم الجمعة المبارك — النقاط مضاعفة ×٣</div>` : ''}
+    ${isFri ? `<div class="friday-banner">🌟 يوم الجمعة المبارك — أكثِر من الصلاة على النبي ﷺ</div>` : ''}
 
     <div class="hero-card" id="hero-card">
-      <div class="hero-level">${lv.icon} ${lv.title}</div>
-      <div class="hero-xp">${aN(st.xp)} XP</div>
-      <div class="hero-bar-wrap">
-        <div class="hero-bar" style="width:${Math.round(pct*100)}%"></div>
+      <div class="hero-greeting">${_greeting()}</div>
+      <div class="hero-streak-big">🔥 <span id="hero-streak-n">${aN(streak)}</span><small>يوم وِردٍ متواصل</small></div>
+      <div class="hero-chips">
+        <div class="hero-chip"><div class="hc-n" id="hc-today">${aN(_todayTotal(st))}</div><div class="hc-l">تسابيح اليوم</div></div>
+        <div class="hero-chip"><div class="hc-n" id="hc-rec">${aN(recStrk)}</div><div class="hc-l">أيام نقاء</div></div>
+        <div class="hero-chip"><div class="hc-n" id="hc-pray">${aN(_prayDone())}/٥</div><div class="hc-l">صلوات اليوم</div></div>
       </div>
-      <div class="hero-to-next">${toNext > 0 ? `${aN(toNext)} XP للمستوى القادم` : '🏆 أعلى مستوى'}</div>
-      <div class="hero-streak">🔥 ${aN(st.tasbeehStreak)} يوم متواصل</div>
     </div>
 
     <div class="verse-card">
@@ -85,13 +96,11 @@ export function renderHome() {
   document.querySelectorAll('.dhikr-card').forEach(card => {
     const idx = parseInt(card.dataset.idx, 10);
 
-    // نقرة → زيادة مباشرة
     card.querySelector('.dhikr-tap-zone')?.addEventListener('click', () => {
       tapDhikr(idx, 1);
       playTap(); vib(15);
     });
 
-    // ضغط مطوّل → فتح العداد الغامر
     let _longTimer = null;
     card.addEventListener('pointerdown', () => {
       _longTimer = setTimeout(() => openCounter(idx), 500);
@@ -99,7 +108,6 @@ export function renderHome() {
     card.addEventListener('pointerup',   () => clearTimeout(_longTimer));
     card.addEventListener('pointerleave',() => clearTimeout(_longTimer));
 
-    // زر الإضافة اليدوية
     card.querySelector('.btn-dhikr-add')?.addEventListener('click', e => {
       e.stopPropagation();
       openBulkAdd(idx);
@@ -161,20 +169,16 @@ function _refreshCounts() {
       card.classList.toggle('done', pct >= 1);
     }
   });
+  const tEl = $('hc-today');
+  if (tEl) tEl.textContent = aN(_todayTotal(st));
 }
 
 function _refreshHero() {
-  const st  = getState();
-  const lv  = LEVELS[calcLevel(st.xp) - 1] || LEVELS[0];
-  const pct = calcLevelProgress(st.xp);
-
-  const xpEl    = document.querySelector('.hero-xp');
-  const lvEl    = document.querySelector('.hero-level');
-  const barEl   = document.querySelector('.hero-bar');
-  const strkEl  = document.querySelector('.hero-streak');
-
-  if (xpEl)   xpEl.textContent   = aN(st.xp) + ' XP';
-  if (lvEl)   lvEl.textContent   = lv.icon + ' ' + lv.title;
-  if (barEl)  barEl.style.width  = Math.round(pct*100) + '%';
-  if (strkEl) strkEl.textContent = '🔥 ' + aN(st.tasbeehStreak) + ' يوم متواصل';
+  const st = getState();
+  const sEl = $('hero-streak-n');
+  const rEl = $('hc-rec');
+  const pEl = $('hc-pray');
+  if (sEl) sEl.textContent = aN(st.tasbeehStreak || 0);
+  if (rEl) rEl.textContent = aN(st.recovery?.streak || 0);
+  if (pEl) pEl.textContent = aN(_prayDone()) + '/٥';
 }

@@ -97,13 +97,13 @@ function _updateUI() {
 function _onComplete() {
   vib([300,100,300,100,300]);
   releaseWakeLock();
-  // منح XP إذا 30+ دقيقة
+  // تسجيل جلسة تركيز مكتملة (30+ دقيقة)
   if (_total >= 30 * 60) {
     const key = 'wirdi_focus_' + dStr();
     if (!LS.get(key)) {
       LS.set(key, true);
       awardXP('focus_session_30m');
-      toast('🎯 جلسة تركيز مكتملة — +XP!');
+      toast('🎯 أحسنت — جلسة تركيز مكتملة!');
     }
   }
   closeOverlay('focus-ov');
