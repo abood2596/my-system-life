@@ -16,9 +16,29 @@ android {
         vectorDrawables { useSupportLibrary = true }
     }
 
+    // توقيع ثابت من سرّ GitHub (إن وُجد) لضمان تحديثات بلا فقدان بيانات.
+    // لا يوجد أي مفتاح داخل المستودع؛ يُقرأ من متغيرات البيئة فقط.
+    val ksPath = System.getenv("ISHRAQ_KEYSTORE_FILE")
+    val hasKeystore = ksPath != null && file(ksPath).exists()
+    if (hasKeystore) {
+        signingConfigs {
+            create("ishraq") {
+                storeFile = file(ksPath!!)
+                storePassword = System.getenv("ISHRAQ_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("ISHRAQ_KEY_ALIAS") ?: "ishraq"
+                keyPassword = System.getenv("ISHRAQ_KEY_PASSWORD")
+                    ?: System.getenv("ISHRAQ_KEYSTORE_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
+        debug {
+            if (hasKeystore) signingConfig = signingConfigs.getByName("ishraq")
+        }
         release {
             isMinifyEnabled = false
+            if (hasKeystore) signingConfig = signingConfigs.getByName("ishraq")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
