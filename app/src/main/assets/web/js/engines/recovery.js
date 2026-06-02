@@ -89,11 +89,30 @@ export function useFreeze() {
     return false;
   }
   rec.freezesLeft--;
+  rec.lastFreezeDate = today;
   rec.lastCheckin = today;
   rec.totalCleanDays++;
-  toast('🧊 تم استخدام Freeze — الـ Streak محمي');
+  const warn = rec.freezesLeft === 0
+    ? ' — لا تجميد متبقٍّ!'
+    : rec.freezesLeft === 1 ? ' — آخر تجميد لديك' : '';
+  toast('🧊 تم استخدام Freeze — الـ Streak محمي' + warn);
   _save(rec);
   return true;
+}
+
+// ── معلومات التجميد والشحن ───────────────────────────────
+export function getFreezeInfo() {
+  const rec = getState().recovery;
+  const streak = rec.streak || 0;
+  const freezesLeft = rec.freezesLeft || 0;
+  const nextRechargeDay = (Math.floor(streak / 7) + 1) * 7;
+  const daysUntilRecharge = nextRechargeDay - streak;
+  return {
+    freezesLeft,
+    daysUntilRecharge,
+    isLastFreeze: freezesLeft === 1,
+    isEmpty: freezesLeft === 0,
+  };
 }
 
 // ── بروتوكول الانتكاسة (التجديد) ────────────────────────

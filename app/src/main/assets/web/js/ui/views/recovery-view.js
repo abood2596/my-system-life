@@ -2,7 +2,7 @@
 import { getState, subscribe } from '../../core/store.js';
 import { $, aN, fmtCountdown } from '../../core/utils.js';
 import { BRAIN_METRICS, RECOVERY_TIMELINE, getRecoveryPhase, getNextMilestone, isInFlatline } from '../../data/science.js';
-import { checkinClean, useFreeze, getRecoveryStats } from '../../engines/recovery.js';
+import { checkinClean, useFreeze, getRecoveryStats, getFreezeInfo } from '../../engines/recovery.js';
 import { addPush, addSquat, setManual, cancelRestTimer } from '../../engines/fitness.js';
 import { openSOS } from '../overlays/sos.js';
 
@@ -78,15 +78,7 @@ export function renderRecoveryView() {
     </div>` : ''}
 
     <!-- ── Action Buttons ── -->
-    <div class="rec-actions">
-      <button class="btn-rec-action btn-checkin ${checkedIn ? 'done' : ''}" id="btn-rec-checkin">
-        ${checkedIn ? '✅ سجّلتَ يومك' : '✅ أنا نقي اليوم'}
-      </button>
-      <button class="btn-rec-action btn-freeze" id="btn-rec-freeze">
-        🧊 تجميد (${aN(rec.freezesLeft || 0)})
-      </button>
-      <button class="btn-rec-action btn-sos" id="btn-rec-sos">🚨 إنقاذ فوري</button>
-    </div>
+    ${_renderActions(rec, checkedIn)}
 
     <!-- ── Brain Recovery ── -->
     <div class="brain-section">
@@ -151,14 +143,15 @@ export function renderRecoveryView() {
 
     <!-- ── Timeline ── -->
     <div class="rec-timeline">
-      <div class="rec-timeline-title">🗓 خارطة الطريق العلمية</div>
+      <div class="rec-timeline-title">🗓 خارطة الطريق العلمية <span class="tl-hint">اضغط لتفاصيل علمية</span></div>
       ${RECOVERY_TIMELINE.map(m => `
-        <div class="timeline-item ${rec.streak >= m.day ? 'reached' : ''}">
+        <div class="timeline-item ${rec.streak >= m.day ? 'reached' : ''}" data-tl-day="${m.day}">
           <div class="timeline-dot" style="background:${m.color}"></div>
           <div class="timeline-content">
             <div class="timeline-day" style="color:${m.color}">يوم ${aN(m.day)}</div>
             <div class="timeline-label">${m.icon} ${m.label}</div>
           </div>
+          <div class="timeline-item-arrow">←</div>
         </div>`).join('')}
     </div>
   `;
@@ -166,6 +159,13 @@ export function renderRecoveryView() {
   $('btn-rec-checkin')?.addEventListener('click', () => { checkinClean(); renderRecoveryView(); });
   $('btn-rec-freeze')?.addEventListener('click',  () => { useFreeze();    renderRecoveryView(); });
   $('btn-rec-sos')?.addEventListener('click', openSOS);
+
+  el.querySelectorAll('[data-tl-day]').forEach(item => {
+    item.addEventListener('click', () => {
+      const day = parseInt(item.dataset.tlDay, 10);
+      _showTimelineModal(RECOVERY_TIMELINE.find(m => m.day === day));
+    });
+  });
 
   el.querySelectorAll('.btn-fit-add').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -207,4 +207,62 @@ function _refreshFitness() {
 function _today() {
   const d = new Date();
   return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+
+// ── Action Buttons HTML (with freeze info) ────────────────
+function _renderActions(rec, checkedIn) {
+  const fi = getFreezeInfo();
+  const freezeWarn = fi.isEmpty ? 'warn' : fi.isLastFreeze ? 'warn' : '';
+  const freezeHint = fi.isEmpty
+    ? `⏳ الشحن القادم خلال ${aN(fi.daysUntilRecharge)} أيام`
+    : fi.isLastFreeze
+      ? `⚠️ آخر تجميد · يُشحن خلال ${aN(fi.daysUntilRecharge)} أيام`
+      : `🔋 يُشحن كل ٧ أيام · التالي خلال ${aN(fi.daysUntilRecharge)} أيام`;
+  return `
+    <div class="rec-actions">
+      <button class="btn-rec-action btn-checkin ${checkedIn ? 'done' : ''}" id="btn-rec-checkin">
+        ${checkedIn ? '✅ سجّلتَ يومك' : '✅ أنا نقي اليوم'}
+      </button>
+      <button class="btn-rec-action btn-freeze ${freezeWarn}" id="btn-rec-freeze">
+        🧊 تجميد (${aN(fi.freezesLeft)})
+      </button>
+      <button class="btn-rec-action btn-sos" id="btn-rec-sos">🚨 إنقاذ فوري</button>
+    </div>
+    <div class="freeze-hint">${freezeHint}</div>`;
+}
+
+// ── Timeline Modal ────────────────────────────────────────
+const TL_DETAILS = {
+  0:  { detail: 'أول يوم هو الأصعب — الجهاز العصبي يبدأ إعادة ضبطه فور التوقف. الإرادة في هذا اليوم تساوي أكثر من أي يوم آخر.', src: 'Journal of Behavioral Medicine 2021' },
+  7:  { detail: 'هرمون التستوستيرون يرتفع 45٪ في اليوم 7. الكورتيزول (هرمون الإجهاد) يبدأ بالانخفاض. النوم يتحسّن تدريجياً.', src: 'Journal of Endocrinology' },
+  12: { detail: 'مرحلة Flatline: الدماغ يُعيد بناء مستقبلات D2 من الصفر. الفتور والضجر هنا هو دليل نجاح التعافي — ليس ضعفاً أبداً.', src: 'Neuropsychopharmacology 2023' },
+  21: { detail: 'مستقبلات الدوبامين D2 تعود لمستوياتها الطبيعية! المتعة من الأشياء العادية — طعام، طبيعة، مجالسة — تعود تدريجياً.', src: 'Nature Neuroscience / PubMed PMID:19158374' },
+  30: { detail: 'قشرة الفص الجبهي (PFC) — مركز الإرادة والقرار — تعافت بشكل ملحوظ. قراراتك الآن أفضل وأكثر رشداً علمياً.', src: 'Journal of Neuroscience 2020' },
+  45: { detail: 'مرحلة Flatline انتهت رسمياً. الدماغ استعاد توازنه الكيميائي الكامل. الطاقة والحيوية والاندفاع الإيجابي تعودان.', src: 'Frontiers in Neuroscience' },
+  60: { detail: 'BDNF (Brain-Derived Neurotrophic Factor) وصل ذروته — عامل نمو الأعصاب يُقوّي الذاكرة والتركيز. التعلّم يصبح أسهل.', src: 'Frontiers in Public Health 2023' },
+  90: { detail: '90 يوماً = إعادة تشغيل كاملة للدماغ. الأبحاث تُظهر أن التغييرات دائمة إذا استُمر بالعادات الصحية والعبادة.', src: 'Multiple PubMed Studies (2019–2023)' },
+};
+
+function _showTimelineModal(milestone) {
+  if (!milestone) return;
+  const ov = document.getElementById('tl-ov');
+  if (!ov) return;
+  const d = TL_DETAILS[milestone.day] || { detail: '', src: '' };
+  ov.innerHTML = `
+    <div class="tl-modal">
+      <button class="tl-close" id="tl-close-btn">✕</button>
+      <div class="tl-day">${milestone.icon} يوم ${aN(milestone.day)}</div>
+      <div class="tl-title">${milestone.phase}</div>
+      <div class="tl-label-sm">${milestone.label}</div>
+      <div class="tl-detail">${d.detail}</div>
+      <div class="tl-src">📚 المصدر: ${d.src}</div>
+    </div>`;
+  ov.classList.add('on');
+  document.getElementById('tl-close-btn')?.addEventListener('click', () => _closeTlModal());
+  ov.addEventListener('click', e => { if (e.target === ov) _closeTlModal(); }, { once: true });
+}
+
+function _closeTlModal() {
+  const ov = document.getElementById('tl-ov');
+  if (ov) { ov.classList.remove('on'); ov.innerHTML = ''; }
 }

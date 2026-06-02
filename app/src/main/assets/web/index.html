@@ -185,6 +185,50 @@ canvas#pcv{position:fixed;inset:0;pointer-events:none;z-index:0;}
 .btn-sos-save,.btn-sos-confirm-relapse{background:var(--gold);color:var(--bg);border-radius:var(--r-pill);padding:12px;font-weight:700;text-align:center;}
 .sos-renewal-msg p{color:var(--t70);margin-bottom:8px;font-size:.9rem;}
 .sos-renewal-msg strong{color:var(--gold-l);}
+/* SOS v23 — breathing + steps */
+.sos-dots{display:flex;gap:8px;justify-content:center;}
+.sos-dot{width:10px;height:10px;border-radius:50%;background:var(--bg-card2);border:1px solid var(--t30);transition:all .3s;}
+.sos-dot.active{background:var(--gold);border-color:var(--gold);transform:scale(1.25);}
+.sos-dot.done{background:var(--green);border-color:var(--green);}
+.sos-breath-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;padding:8px 0;}
+.sos-breath-ring{width:150px;height:150px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--bg-card);}
+.sos-breath-circle{width:110px;height:110px;border-radius:50%;background:var(--blue);transform:scale(0.35);transition:transform 4s ease-out,background .5s;box-shadow:0 0 30px rgba(59,130,246,.35);}
+.sos-breath-label{font-size:1.1rem;font-weight:600;color:var(--gold-l);text-align:center;min-height:1.5em;}
+.sos-breath-cycles{font-size:1.1rem;letter-spacing:6px;color:var(--t50);}
+.sos-sub{font-size:.85rem;color:var(--t70);text-align:center;}
+.sos-env-list{display:flex;flex-direction:column;gap:7px;}
+.sos-env-item{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:11px 14px;text-align:right;font-size:.9rem;color:var(--t90);transition:all .2s;}
+.sos-env-item.selected,.sos-env-item:active{background:var(--green-d);border-color:var(--green);color:var(--green);}
+.sos-tasbeeh-outer{width:130px;height:130px;border-radius:50%;background:conic-gradient(var(--gold) 0deg,var(--bg-card2) 0deg);display:flex;align-items:center;justify-content:center;margin:4px auto;box-shadow:0 0 20px var(--gold-dim);}
+.sos-tasbeeh-inner{width:95px;height:95px;border-radius:50%;background:var(--bg2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;}
+.sos-tb-num{font-size:2.2rem;font-weight:700;color:var(--gold-l);line-height:1;}
+.sos-tb-sub{font-size:.8rem;color:var(--t50);}
+.sos-tb-arabic{font-family:var(--f-quran);font-size:1.25rem;color:var(--t70);text-align:center;}
+.btn-sos-tb{background:var(--gold-dim);border:1px solid var(--gold);color:var(--gold-l);border-radius:var(--r-pill);padding:13px;font-size:.95rem;font-weight:700;width:100%;}
+.sos-dua-big{font-family:var(--f-quran);font-size:1rem;color:var(--gold-l);text-align:center;line-height:1.9;background:var(--gold-dim2);border:1px solid var(--border-gold);border-radius:var(--r-md);padding:14px;}
+.sos-ayah-wrap{background:var(--bg-card);border-right:3px solid var(--blue);border-radius:var(--r-sm);padding:11px 14px;}
+.sos-ayah-text{font-family:var(--f-quran);font-size:.85rem;color:var(--t70);line-height:1.8;}
+.sos-instruct{font-size:.85rem;color:var(--green);text-align:center;}
+.sos-pledge-msg p{color:var(--t70);margin-bottom:6px;font-size:.9rem;text-align:center;}
+.btn-sos-pledge{background:linear-gradient(135deg,var(--green),#059669);color:#fff;border-radius:var(--r-pill);padding:14px;font-weight:700;font-size:.95rem;text-align:center;}
+/* freeze recharge */
+.btn-freeze.warn{border-color:var(--red)!important;color:var(--red)!important;}
+.freeze-hint{font-size:.72rem;color:var(--t50);text-align:center;margin-top:-4px;padding-bottom:4px;}
+/* timeline interactive */
+.tl-hint{font-size:.7rem;color:var(--t30);font-weight:400;margin-right:6px;}
+.timeline-item{cursor:pointer;border-radius:var(--r-sm);padding:4px 6px;transition:background .2s;display:flex;align-items:center;gap:10px;}
+.timeline-item:active{background:var(--bg-card2);}
+.timeline-item-arrow{font-size:.7rem;color:var(--t30);margin-right:auto;flex-shrink:0;}
+/* timeline modal */
+#tl-ov{position:fixed;inset:0;z-index:700;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;padding:20px;}
+#tl-ov.on{display:flex;}
+.tl-modal{background:var(--bg2);border:1px solid var(--border-gold);border-radius:var(--r-lg);padding:22px;max-width:340px;width:100%;position:relative;}
+.tl-day{font-size:.78rem;color:var(--t50);margin-bottom:4px;}
+.tl-title{font-size:1.05rem;font-weight:700;color:var(--gold-l);margin-bottom:2px;}
+.tl-label-sm{font-size:.82rem;color:var(--t70);margin-bottom:12px;}
+.tl-detail{font-size:.88rem;color:var(--t90);line-height:1.75;margin-bottom:12px;}
+.tl-src{font-size:.72rem;color:var(--t30);border-top:1px solid var(--border);padding-top:8px;}
+.tl-close{position:absolute;top:10px;left:10px;background:var(--bg-card2);border-radius:50%;width:32px;height:32px;color:var(--t70);font-size:.9rem;display:flex;align-items:center;justify-content:center;}
 
 /* ══ FOCUS OVERLAY ═══════════════════════════════════════ */
 #focus-ov{position:fixed;inset:0;z-index:500;background:var(--bg);
@@ -561,6 +605,7 @@ canvas#pcv{position:fixed;inset:0;pointer-events:none;z-index:0;}
 <div id="bulk-add-ov" aria-modal="true" aria-hidden="true"></div>
 <div id="bqmod"       aria-modal="true" aria-hidden="true"></div>
 <div id="sos-ov"      aria-modal="true" aria-hidden="true"></div>
+<div id="tl-ov"       aria-modal="true" aria-hidden="true"></div>
 <div id="focus-ov"    aria-modal="true" aria-hidden="true"></div>
 
 <!-- BANNERS -->
