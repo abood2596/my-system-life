@@ -2,36 +2,37 @@ package com.farra.systemlife.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-/**
- * نظام الألوان الملكي الإيماني — Royal Imani palette.
- * زمرّدي عميق + ذهبي ملكي + خلفيات داكنة مريحة للعين.
- */
+/** نظام الألوان الملكي الإيماني — Royal Imani palette (نسخة مُحسّنة أغنى وأدفأ). */
 
-// Emerald (primary)
-val EmeraldDeep = Color(0xFF0C3B2E)
+// Emerald family
+val EmeraldDeepest = Color(0xFF052A20)
+val EmeraldDeep = Color(0xFF0A3A2C)
 val Emerald = Color(0xFF115E47)
-val EmeraldBright = Color(0xFF1C7A5E)
+val EmeraldBright = Color(0xFF1FA37A)
+val EmeraldGlow = Color(0xFF27C08F)
 
-// Royal gold (secondary / accent)
-val RoyalGold = Color(0xFFC9A24B)
-val GoldLight = Color(0xFFE6C56A)
-val GoldSoft = Color(0xFFD9B871)
+// Royal gold
+val GoldDeep = Color(0xFFC49A43)
+val RoyalGold = Color(0xFFE0B85C)
+val GoldLight = Color(0xFFF1D488)
 
-// Dark surfaces (midnight emerald)
-val MidnightEmerald = Color(0xFF07211A)
-val SurfaceDark = Color(0xFF0E2A22)
-val SurfaceDarkHigh = Color(0xFF143A30)
+// Surfaces
+val MidnightEmerald = Color(0xFF06251C)
+val SurfaceDark = Color(0xFF103A2D)
+val SurfaceDarkHigh = Color(0xFF164A39)
+val CardBorder = Color(0x33E0B85C)
 
-// Light surfaces (ivory)
-val Ivory = Color(0xFFF4EFE3)
-val IvorySurface = Color(0xFFFBF8F0)
+// Light theme
+val Ivory = Color(0xFFF5F0E2)
+val IvorySurface = Color(0xFFFCFAF2)
+val IvoryVariant = Color(0xFFEAE2CE)
 
 // Text
-val TextOnDark = Color(0xFFECE7D8)
-val TextOnDarkMuted = Color(0xFFA9B8AE)
-val TextOnLight = Color(0xFF1A2620)
+val TextOnDark = Color(0xFFF1ECDD)
+val TextOnDarkMuted = Color(0xFFA2B7AB)
+val TextOnLight = Color(0xFF15241D)
 
 // Semantic
-val SuccessGreen = Color(0xFF3BA776)
-val WarningAmber = Color(0xFFE0A93B)
-val DangerRed = Color(0xFFC1554A)
+val SuccessGreen = Color(0xFF2FBE8C)
+val WarningAmber = Color(0xFFE6A93B)
+val DangerRed = Color(0xFFD46A5C)

@@ -7,6 +7,7 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
@@ -15,9 +16,11 @@ private val DarkColors = darkColorScheme(
     onPrimary = MidnightEmerald,
     primaryContainer = Emerald,
     onPrimaryContainer = TextOnDark,
-    secondary = GoldSoft,
+    secondary = EmeraldGlow,
     onSecondary = MidnightEmerald,
-    tertiary = EmeraldBright,
+    secondaryContainer = SurfaceDarkHigh,
+    onSecondaryContainer = TextOnDark,
+    tertiary = GoldLight,
     background = MidnightEmerald,
     onBackground = TextOnDark,
     surface = SurfaceDark,
@@ -25,7 +28,8 @@ private val DarkColors = darkColorScheme(
     surfaceVariant = SurfaceDarkHigh,
     onSurfaceVariant = TextOnDarkMuted,
     error = DangerRed,
-    outline = GoldSoft,
+    onError = Color.White,
+    outline = GoldDeep,
 )
 
 private val LightColors = lightColorScheme(
@@ -33,17 +37,17 @@ private val LightColors = lightColorScheme(
     onPrimary = Ivory,
     primaryContainer = GoldLight,
     onPrimaryContainer = EmeraldDeep,
-    secondary = RoyalGold,
+    secondary = EmeraldBright,
     onSecondary = Ivory,
-    tertiary = EmeraldBright,
+    tertiary = GoldDeep,
     background = Ivory,
     onBackground = TextOnLight,
     surface = IvorySurface,
     onSurface = TextOnLight,
-    surfaceVariant = androidx.compose.ui.graphics.Color(0xFFEAE3D2),
+    surfaceVariant = IvoryVariant,
     onSurfaceVariant = TextOnLight,
     error = DangerRed,
-    outline = RoyalGold,
+    outline = GoldDeep,
 )
 
 @Composable
