@@ -25,13 +25,43 @@ jobs:
         with:
           gradle-version: "8.11.1"
 
-      - name: Build debug APK
-        run: gradle assembleDebug --stacktrace
+      - name: Decode keystore (if secret exists)
+        env:
+          KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
+        run: |
+          if [ -n "$KEYSTORE_B64" ]; then
+            echo "$KEYSTORE_B64" | base64 -d > app/release.keystore
+            echo "HAS_KEYSTORE=true" >> $GITHUB_ENV
+          else
+            echo "HAS_KEYSTORE=false" >> $GITHUB_ENV
+          fi
 
-      - name: Rename APK
+      - name: Build APK
+        env:
+          HAS_KEYSTORE:       ${{ env.HAS_KEYSTORE }}
+          KEY_ALIAS:          ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD:       ${{ secrets.KEY_PASSWORD }}
+          STORE_PASSWORD:     ${{ secrets.STORE_PASSWORD }}
+        run: |
+          if [ "$HAS_KEYSTORE" = "true" ]; then
+            gradle assembleRelease \
+              -Pandroid.injected.signing.store.file="$(pwd)/app/release.keystore" \
+              -Pandroid.injected.signing.store.password="$STORE_PASSWORD" \
+              -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
+              -Pandroid.injected.signing.key.password="$KEY_PASSWORD" \
+              --stacktrace
+          else
+            gradle assembleDebug --stacktrace
+          fi
+
+      - name: Collect APK
         run: |
           mkdir -p dist
-          cp app/build/outputs/apk/debug/*.apk dist/MySystemLife.apk
+          if [ "$HAS_KEYSTORE" = "true" ]; then
+            cp app/build/outputs/apk/release/*.apk dist/MySystemLife.apk
+          else
+            cp app/build/outputs/apk/debug/*.apk dist/MySystemLife.apk
+          fi
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
@@ -40,13 +70,21 @@ jobs:
           path: dist/MySystemLife.apk
           if-no-files-found: error
 
-      - name: Publish to Release (direct download link)
+      - name: Publish to Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
-          name: نظام حياتي — أحدث نسخة
+          name: نظام حياتي — v22
           body: |
-            ملف التثبيت المباشر لتطبيق "نظام حياتي".
-            حمّل MySystemLife.apk وثبّته على هاتفك (فعّل "تثبيت من مصادر غير معروفة").
+            ## نظام حياتي — v22 🌅
+
+            ### ما الجديد:
+            - **الرئيسية:** بطاقة hero جديدة — تحية حسب الوقت + حلقة سلسلة الأيام + ٣ مقاييس حقيقية (صلوات/ورد/نقاء)
+            - **التعافي:** لافتة Flatline مُعمَّقة علمياً + أشرطة دماغ متحركة + إجمالي أيام النقاء المحفوظ للأبد
+            - **الإحصائيات:** ٦ مقاييس حقيقية + خريطة السنة + "محطّاتك" بدل شبكة XP
+            - **إزالة كاملة لنظام XP/النقاط** من كل الواجهات
+
+            ---
+            حمّل `MySystemLife.apk` وثبّته (فعّل "تثبيت من مصادر غير معروفة").
           files: dist/MySystemLife.apk
           make_latest: "true"

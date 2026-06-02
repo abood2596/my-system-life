@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="تسابيح">
 <meta name="description" content="مرصد روحي شامل — تسبيح، صلاة، تعافٍ، تمرين">
-<title>تَسَابِيح ∞ v21</title>
+<title>نظام حياتي — v22</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icons/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -236,12 +236,30 @@ canvas#pcv{position:fixed;inset:0;pointer-events:none;z-index:0;}
   text-align:center;color:var(--gold-l);font-weight:600;font-size:.9rem;margin-bottom:12px;}
 .hero-card{background:linear-gradient(135deg,var(--bg3),var(--bg2));
   border:1px solid var(--border-gold);border-radius:var(--r-lg);padding:16px;margin-bottom:12px;}
-.hero-level{font-size:.9rem;color:var(--gold);font-weight:600;}
-.hero-xp{font-size:1.8rem;font-weight:700;color:var(--gold-l);}
-.hero-bar-wrap{height:6px;background:var(--t06);border-radius:3px;margin:8px 0;}
-.hero-bar{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-l));border-radius:3px;transition:width .5s;}
-.hero-to-next{font-size:.75rem;color:var(--t50);}
-.hero-streak{font-size:.85rem;color:var(--t70);margin-top:4px;}
+
+/* Home Hero v2 */
+.home-hero{padding:14px 16px;}
+.home-greeting{font-size:.92rem;font-weight:600;color:var(--t70);margin-bottom:12px;text-align:center;letter-spacing:.02em;}
+.home-hero-body{display:flex;align-items:center;gap:14px;}
+.home-ring-wrap{position:relative;width:110px;height:110px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.home-ring-svg{width:110px;height:110px;position:absolute;inset:0;}
+.home-ring-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1;}
+.home-ring-num{font-size:2.2rem;font-weight:700;color:var(--gold-l);line-height:1;}
+.home-ring-lbl{font-size:.7rem;color:var(--t50);margin-top:2px;}
+.home-chips-col{flex:1;display:flex;flex-direction:column;gap:8px;}
+.home-chip{display:flex;align-items:center;gap:10px;background:var(--bg-card2);
+  border:1px solid var(--border);border-radius:var(--r-md);padding:9px 12px;transition:border-color .3s,background .3s;}
+.home-chip.chip-done{background:var(--green-d);border-color:rgba(16,185,129,.4);}
+.home-chip.chip-rec-active{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.2);}
+.chip-ico{font-size:1.2rem;flex-shrink:0;}
+.chip-body{display:flex;flex-direction:column;gap:1px;}
+.chip-val{font-size:1.1rem;font-weight:700;color:var(--gold-l);line-height:1;}
+.chip-val .chip-of{font-size:.7rem;font-weight:400;color:var(--t50);}
+.chip-lbl{font-size:.65rem;color:var(--t50);}
+
+/* Stats cards icon */
+.stat-card-ico{font-size:1.4rem;margin-bottom:4px;}
+.green-card{background:var(--green-d);border-color:rgba(16,185,129,.3);}
 .verse-card{background:var(--gold-dim2);border:1px solid var(--border-gold);
   border-radius:var(--r-md);padding:14px;margin-bottom:12px;text-align:center;}
 .verse-text{font-family:var(--f-quran);font-size:1rem;color:var(--t90);line-height:1.9;}
@@ -338,11 +356,34 @@ canvas#pcv{position:fixed;inset:0;pointer-events:none;z-index:0;}
 .rec-phase-label{font-size:.78rem;color:var(--t70);margin:4px 0;}
 .rec-total,.rec-best{font-size:.78rem;color:var(--t50);}
 .flatline-banner{background:var(--purple-d);border:1px solid var(--purple);border-radius:var(--r-md);
-  padding:12px;margin-bottom:12px;}
-.flatline-title{font-weight:700;color:var(--purple);font-size:.9rem;margin-bottom:4px;}
-.flatline-msg{font-size:.82rem;color:var(--t70);}
+  padding:14px;margin-bottom:12px;}
+.flatline-pulse{animation:flatlinePulse 3s ease-in-out infinite;}
+@keyframes flatlinePulse{0%,100%{box-shadow:0 0 0 0 rgba(139,92,246,0);}50%{box-shadow:0 0 12px 2px rgba(139,92,246,.25);}}
+.flatline-header{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
+.flatline-icon{font-size:1.6rem;flex-shrink:0;}
+.flatline-title{font-weight:700;color:var(--purple);font-size:.9rem;margin-bottom:2px;}
+.flatline-subtitle{font-size:.78rem;color:var(--t70);}
+.flatline-pills{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;}
+.flatline-pill{background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.2);border-radius:var(--r-pill);
+  padding:5px 12px;font-size:.78rem;color:var(--t70);}
+.flatline-tip{font-size:.8rem;color:var(--purple);font-weight:600;}
 .rec-milestone{background:var(--gold-dim2);border:1px solid var(--border-gold);border-radius:var(--r-md);
-  padding:10px 14px;font-size:.85rem;color:var(--gold-l);margin-bottom:12px;}
+  padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;gap:12px;}
+.milestone-icon{font-size:1.4rem;flex-shrink:0;}
+.milestone-label{font-size:.85rem;color:var(--gold-l);font-weight:600;}
+.milestone-remaining{font-size:.75rem;color:var(--t50);margin-top:2px;}
+
+/* rec-total redesign */
+.rec-total-row{display:flex;align-items:center;gap:6px;margin:6px 0 2px;}
+.rec-total-ico{font-size:.9rem;}
+.rec-total-num{font-size:1.1rem;font-weight:700;color:var(--gold-l);}
+.rec-total-lbl{font-size:.72rem;color:var(--t50);}
+
+/* Brain bar entrance animation */
+.brain-metric{animation:fadeSlideUp .4s ease both;}
+@keyframes fadeSlideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.bm-bar-animate{width:0;transition:none;}
+.bm-bar-animate.bm-bar-run{width:var(--bm-w);transition:width .9s cubic-bezier(.4,0,.2,1);}
 .rec-actions{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
 .btn-rec-action{flex:1;min-width:0;border-radius:var(--r-md);padding:12px 8px;font-size:.82rem;font-weight:600;text-align:center;}
 .btn-checkin{background:var(--green);color:var(--bg);}
@@ -391,9 +432,6 @@ canvas#pcv{position:fixed;inset:0;pointer-events:none;z-index:0;}
 .timeline-label{font-size:.78rem;color:var(--t70);}
 
 /* ══ STATS VIEW ══════════════════════════════════════════ */
-.stats-hero{text-align:center;margin-bottom:16px;}
-.stats-level{font-size:1rem;color:var(--gold);font-weight:600;}
-.stats-xp{font-size:1.6rem;font-weight:700;color:var(--gold-l);}
 .stats-cards{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
 .stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);
   padding:14px;text-align:center;}
@@ -487,7 +525,7 @@ canvas#pcv{position:fixed;inset:0;pointer-events:none;z-index:0;}
       <button class="btn-more-action" id="btn-restore">📥 استعادة</button>
     </div>
     <div class="more-section" style="text-align:center;color:var(--t30,var(--t50));font-size:.75rem;">
-      <p>تَسَابِيح ∞ — النسخة الملكية</p>
+      <p>نظام حياتي — v22 | الإصدار الجديد</p>
       <p style="margin-top:8px;color:var(--gold-l);font-weight:600;">تطوير: عبدالحميد الفرا</p>
       <p style="margin-top:8px;color:var(--t70);">صدقة جارية عن روح الشهيد البطل<br><strong style="color:var(--gold-l);">زهير الفرا</strong><br>بطل الدفاع المدني — استشهد في مجزرة المسعفين<br>٢٣ مارس ٢٠٢٥</p>
       <p style="margin-top:8px;color:var(--gold);">اللهم تقبّله في الشهداء وارحمه رحمة واسعة</p>
