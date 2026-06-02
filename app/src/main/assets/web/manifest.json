@@ -1,0 +1,30 @@
+{
+  "id": "./",
+  "name": "تَسَابِيح ∞",
+  "short_name": "تسابيح",
+  "description": "مرصد روحي شامل — تسبيح، صلاة، تعافٍ، تمرين — صدقة جارية لأرواح شهداء غزة 🇵🇸",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#060410",
+  "theme_color": "#060410",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["lifestyle", "utilities"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon.svg",     "sizes": "any",     "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "الورد اليومي",  "url": "./?tab=home",     "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "أوقات الصلاة", "url": "./?tab=pray",     "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "نظام التعافي", "url": "./?tab=recovery", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] }
+  ],
+  "screenshots": [
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "form_factor": "narrow", "label": "الشاشة الرئيسية" }
+  ],
+  "prefer_related_applications": false
+}

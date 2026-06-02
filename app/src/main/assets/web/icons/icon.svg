@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#1A1200"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+    <radialGradient id="bg2" cx="50%" cy="20%" r="50%">
+      <stop offset="0%" stop-color="#2A1E00" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="beadGold" cx="32%" cy="28%" r="68%">
+      <stop offset="0%" stop-color="#FFFACD"/>
+      <stop offset="40%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#6B4C00"/>
+    </radialGradient>
+    <radialGradient id="beadCyan" cx="32%" cy="28%" r="68%">
+      <stop offset="0%" stop-color="#E0FEFF"/>
+      <stop offset="40%" stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#005A80"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="sg">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- BG -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <rect width="512" height="512" rx="112" fill="url(#bg2)"/>
+  <!-- Stars -->
+  <g fill="#D4AF37" opacity="0.2">
+    <circle cx="75" cy="85" r="2"/><circle cx="435" cy="115" r="1.5"/>
+    <circle cx="65" cy="405" r="1.5"/><circle cx="455" cy="375" r="2"/>
+    <circle cx="200" cy="28" r="1"/><circle cx="370" cy="48" r="1.5"/>
+  </g>
+  <!-- String circle -->
+  <circle cx="256" cy="272" r="142" fill="none" stroke="#D4AF37" stroke-width="2" opacity="0.18" stroke-dasharray="7,5"/>
+  <!-- Beads: 12 on circle r=142, cx=256, cy=272 -->
+  <g filter="url(#sg)">
+    <!-- top special cyan bead -->
+    <circle cx="256" cy="130" r="21" fill="url(#beadCyan)"/>
+    <circle cx="249" cy="123" r="6" fill="rgba(255,255,255,0.4)"/>
+    <!-- 11 gold beads -->
+    <circle cx="326" cy="147" r="15" fill="url(#beadGold)"/><circle cx="321" cy="142" r="4.5" fill="rgba(255,255,255,0.35)"/>
+    <circle cx="378" cy="200" r="15" fill="url(#beadGold)"/><circle cx="373" cy="195" r="4.5" fill="rgba(255,255,255,0.35)"/>
+    <circle cx="398" cy="272" r="15" fill="url(#beadGold)"/><circle cx="393" cy="267" r="4.5" fill="rgba(255,255,255,0.35)"/>
+    <circle cx="378" cy="344" r="15" fill="url(#beadGold)"/><circle cx="373" cy="339" r="4.5" fill="rgba(255,255,255,0.35)"/>
+    <circle cx="326" cy="397" r="15" fill="url(#beadGold)"/><circle cx="321" cy="392" r="4.5" fill="rgba(255,255,255,0.35)"/>
+    <circle cx="256" cy="414" r="15" fill="url(#beadGold)"/><circle cx="251" cy="409" r="4.5" fill="rgba(255,255,255,0.35)"/>
+    <circle cx="186" cy="397" r="15" fill="url(#beadGold)"/><circle cx="181" cy="392" r="4.5" fill="rgba(255,255,255,0.35)"/>
+    <circle cx="134" cy="344" r="15" fill="url(#beadGold)"/><circle cx="129" cy="339" r="4.5" fill="rgba(255,255,255,0.35)"/>
+    <circle cx="114" cy="272" r="15" fill="url(#beadGold)"/><circle cx="109" cy="267" r="4.5" fill="rgba(255,255,255,0.35)"/>
+    <circle cx="134" cy="200" r="15" fill="url(#beadGold)"/><circle cx="129" cy="195" r="4.5" fill="rgba(255,255,255,0.35)"/>
+    <circle cx="186" cy="147" r="15" fill="url(#beadGold)"/><circle cx="181" cy="142" r="4.5" fill="rgba(255,255,255,0.35)"/>
+  </g>
+  <!-- Tassel -->
+  <line x1="256" y1="151" x2="256" y2="178" stroke="#D4AF37" stroke-width="2.5" opacity="0.7"/>
+  <circle cx="256" cy="183" r="5" fill="#D4AF37" opacity="0.75"/>
+  <!-- Arabic Title -->
+  <text x="256" y="248" font-family="Georgia,serif" font-size="54" font-weight="900" text-anchor="middle" fill="#D4AF37" filter="url(#glow)" letter-spacing="1">تَسَابِيح</text>
+  <!-- Sub -->
+  <text x="256" y="292" font-family="system-ui,sans-serif" font-size="20" text-anchor="middle" fill="rgba(212,175,55,0.5)" letter-spacing="4">ذِكْرُ اللَّهِ</text>
+  <!-- Divider -->
+  <line x1="200" y1="306" x2="312" y2="306" stroke="#D4AF37" stroke-width="1" opacity="0.25"/>
+  <!-- Palestine emoji area - small heart -->
+  <text x="256" y="332" font-size="16" text-anchor="middle" opacity="0.65">🍉</text>
+</svg>
